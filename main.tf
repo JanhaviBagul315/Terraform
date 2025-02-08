@@ -19,28 +19,6 @@ provisioner "local-exec" {
    command = "echo ${aws_instance.myec2.public_ip} > ip.txt"
 }
 }
-resource "aws_security_group" "mysg" {
-  name   = "my-sg1"
-  vpc_id = var.vpc_id
-  egress {
-    from_port = 0
-    to_port   = 0
-    protocol  = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-  ingress {
-     cidr_blocks = ["0.0.0.0/0"]
-    from_port   = 22
-    protocol    = "tcp"
-    to_port     = 22
-  }
-ingress {
-     cidr_blocks = ["0.0.0.0/0"]
-    from_port   = 80
-    protocol    = "tcp"
-    to_port     = 80
-  }
-}
 resource "aws_key_pair" "tf-key-pair" {
     key_name = "mytf-key"
     public_key = tls_private_key.rsa.public_key_openssh
